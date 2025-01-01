@@ -24,7 +24,7 @@ body {
 
 /* Header title */
 .header h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #4285f4;
   margin-bottom: 10px;
   font-weight: 600;
@@ -80,6 +80,15 @@ body {
   background-color: #357ae8;
 }
 
+/* Adjust search button margin on small screens */
+@media (max-width: 768px) {
+  #search-button {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
 /* Suggestions dropdown */
 .suggestions-list {
   position: absolute;
@@ -130,6 +139,14 @@ body {
   border-color: #4285f4;
 }
 
+/* Adjust sort options for mobile */
+@media (max-width: 768px) {
+  .sort-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
 /* Results container */
 .results-container {
   flex: 1;
@@ -167,6 +184,17 @@ body {
 .result-item ul li {
   font-size: 0.9rem;
   color: #666;
+}
+
+/* Adjust result item font size for mobile */
+@media (max-width: 768px) {
+  .result-item h2 {
+    font-size: 1.2rem;
+  }
+
+  .result-item ul li {
+    font-size: 0.8rem;
+  }
 }
 
 /* Footer styling */
