@@ -3,28 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Company Search</title>
+  <title>Search Page</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="header">
+  <header class="header">
     <h1>Company Search</h1>
     <form id="search-form">
       <div class="search-box">
-        <input type="text" id="search" placeholder="Search for companies..." autocomplete="off" />
+        <input type="text" id="search" placeholder="Search companies...">
         <div id="suggestions" class="suggestions-list"></div>
       </div>
-      <button type="button" id="search-button">Search</button>
+      <button id="search-button" type="button">Search</button>
     </form>
-  </div>
-  <div id="results" class="results-container"></div>
-  <footer class="footer">
-    <div id="footer-content">
-      <p>Total Results: <span id="total-results">0</span></p>
-      <p>Last Updated: <span id="last-updated">N/A</span></p>
-      <p>&copy; 2024 Mihchis. All rights reserved.</p>
+    <div class="sort-container">
+      <label for="sort-options">Sort By:</label>
+      <select id="sort-options">
+        <option value="name-asc">Name (A-Z)</option>
+        <option value="name-desc">Name (Z-A)</option>
+        <option value="region-asc">Region (A-Z)</option>
+        <option value="region-desc">Region (Z-A)</option>
+      </select>
     </div>
+  </header>
+
+  <main class="results-container">
+    <div id="results"></div>
+  </main>
+
+  <footer class="footer">
+    <p>Total Results: <span id="total-results">0</span></p>
+    <p>Last Updated: <span id="last-updated">2024-12-29</span></p>
+    <p>&copy; 2024 Mihchis. All Rights Reserved.</p>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

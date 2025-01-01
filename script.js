@@ -1,38 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search");
   const searchButton = document.getElementById("search-button");
+  const sortOptions = document.getElementById("sort-options");
   const resultsDiv = document.getElementById("results");
   const suggestionsDiv = document.getElementById("suggestions");
-
   const totalResultsSpan = document.getElementById("total-results");
-  const lastUpdatedSpan = document.getElementById("last-updated");
 
   fetch("data.json")
     .then(response => response.json())
     .then(data => {
       const companies = data.companies;
 
-      // Update footer information
-      totalResultsSpan.textContent = data.metadata.total || companies.length;
-      lastUpdatedSpan.textContent = data.metadata.lastUpdated || "Unknown";
-
-      // Search Handler
-      const searchHandler = () => {
-        const query = searchInput.value.toLowerCase();
+      // Function to render results
+      const renderResults = (results) => {
         resultsDiv.innerHTML = "";
-        suggestionsDiv.innerHTML = "";
 
-        const filteredCompanies = companies.filter(company =>
-          company.name.toLowerCase().includes(query) ||
-          company.region.toLowerCase().includes(query)
-        );
-
-        if (filteredCompanies.length === 0) {
+        if (results.length === 0) {
           resultsDiv.innerHTML = "<p>No results found.</p>";
+          totalResultsSpan.textContent = "0";
           return;
         }
 
-        filteredCompanies.forEach(company => {
+        totalResultsSpan.textContent = results.length;
+        results.forEach(company => {
           const companyDiv = document.createElement("div");
           companyDiv.classList.add("result-item");
           companyDiv.innerHTML = `
@@ -46,39 +36,69 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
-      // Suggestions Handler
-      const suggestionHandler = () => {
-        const query = searchInput.value.toLowerCase();
-        suggestionsDiv.innerHTML = "";
+      // Function to sort results
+      const sortResults = (results, criteria) => {
+        switch (criteria) {
+          case "name-asc":
+            return results.sort((a, b) => a.name.localeCompare(b.name));
+          case "name-desc":
+            return results.sort((a, b) => b.name.localeCompare(a.name));
+          case "region-asc":
+            return results.sort((a, b) => a.region.localeCompare(b.region));
+          case "region-desc":
+            return results.sort((a, b) => b.region.localeCompare(a.region));
+          default:
+            return results;
+        }
+      };
 
-        if (query.length === 0) {
+      // Function to show suggestions
+      const showSuggestions = (query) => {
+        suggestionsDiv.innerHTML = "";
+        if (query.trim() === "") {
+          suggestionsDiv.style.display = "none";
           return;
         }
 
-        const filteredSuggestions = companies
-          .filter(company => company.name.toLowerCase().includes(query))
-          .slice(0, 5);
+        const filteredSuggestions = companies.filter(company =>
+          company.name.toLowerCase().includes(query.toLowerCase())
+        );
 
-        filteredSuggestions.forEach(company => {
-          const suggestionItem = document.createElement("div");
-          suggestionItem.textContent = company.name;
-          suggestionItem.addEventListener("click", () => {
-            searchInput.value = company.name;
-            suggestionsDiv.innerHTML = "";
+        filteredSuggestions.forEach(suggestion => {
+          const suggestionDiv = document.createElement("div");
+          suggestionDiv.textContent = suggestion.name;
+          suggestionDiv.addEventListener("click", () => {
+            searchInput.value = suggestion.name;
             searchHandler();
+            suggestionsDiv.style.display = "none";
           });
-          suggestionsDiv.appendChild(suggestionItem);
+          suggestionsDiv.appendChild(suggestionDiv);
         });
+
+        suggestionsDiv.style.display = "block";
+      };
+
+      // Search handler
+      const searchHandler = () => {
+        const query = searchInput.value.toLowerCase();
+        const filteredCompanies = companies.filter(company =>
+          company.name.toLowerCase().includes(query) ||
+          company.region.toLowerCase().includes(query)
+        );
+
+        const sortedCompanies = sortResults(filteredCompanies, sortOptions.value);
+        renderResults(sortedCompanies);
       };
 
       // Event Listeners
       searchButton.addEventListener("click", searchHandler);
-      searchInput.addEventListener("input", suggestionHandler);
-      searchInput.addEventListener("keydown", event => {
+      sortOptions.addEventListener("change", searchHandler);
+      searchInput.addEventListener("input", (event) => showSuggestions(event.target.value));
+      searchInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           event.preventDefault();
           searchHandler();
-          suggestionsDiv.innerHTML = "";
+          suggestionsDiv.style.display = "none";
         }
       });
     })
