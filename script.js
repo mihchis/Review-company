@@ -4,10 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsDiv = document.getElementById("results");
   const suggestionsDiv = document.getElementById("suggestions");
 
+  const totalResultsSpan = document.getElementById("total-results");
+  const lastUpdatedSpan = document.getElementById("last-updated");
+
   fetch("data.json")
     .then(response => response.json())
     .then(data => {
       const companies = data.companies;
+
+      // Update footer information
+      totalResultsSpan.textContent = data.metadata.total || companies.length;
+      lastUpdatedSpan.textContent = data.metadata.lastUpdated || "Unknown";
 
       // Search Handler
       const searchHandler = () => {
@@ -50,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const filteredSuggestions = companies
           .filter(company => company.name.toLowerCase().includes(query))
-          .slice(0, 5); // Show up to 5 suggestions
+          .slice(0, 5);
 
         filteredSuggestions.forEach(company => {
           const suggestionItem = document.createElement("div");
