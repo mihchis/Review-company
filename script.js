@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsDiv.innerHTML = "";
 
         if (results.length === 0) {
-          resultsDiv.innerHTML = "<p>No results found.</p>";
+          resultsDiv.innerHTML = "<p>Không tìm thấy.</p>";
           totalResultsSpan.textContent = "0";
           return;
         }
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
           companyDiv.classList.add("result-item");
           companyDiv.innerHTML = `
             <h2>${company.name}</h2>
-            <p><strong>Region:</strong> ${company.region}</p>
-            <p><strong>Address:</strong> ${company.address}</p>
-            <p><strong>Disadvantages:</strong></p>
+            <p><strong>Miền:</strong> ${company.region}</p>
+            <p><strong>Địa chỉ:</strong> ${company.address}</p>
+            <p><strong>Nhược điểm:</strong></p>
             <ul>${company.disadvantages.map(disadv => `<li>${disadv}</li>`).join("")}</ul>
           `;
           resultsDiv.appendChild(companyDiv);
