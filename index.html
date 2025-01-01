@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Page</title>
+  <title>Phốt công ty</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="header">
-    <h1>Company Search</h1>
+    <h1>Tra cứu đánh giá công ty</h1>
     <form id="search-form">
       <div class="search-box">
-        <input type="text" id="search" placeholder="Search companies...">
+        <input type="text" id="search" placeholder="Nhập tên công ty cần tìm...">
         <div id="suggestions" class="suggestions-list"></div>
       </div>
-      <button id="search-button" type="button">Search</button>
+      <button id="search-button" type="button">Tìm kiếm</button>
     </form>
     <div class="sort-container">
-      <label for="sort-options">Sort By:</label>
+      <label for="sort-options">Sắp xếp:</label>
       <select id="sort-options">
-        <option value="name-asc">Name (A-Z)</option>
-        <option value="name-desc">Name (Z-A)</option>
-        <option value="region-asc">Region (A-Z)</option>
-        <option value="region-desc">Region (Z-A)</option>
+        <option value="name-asc">Tên (A-Z)</option>
+        <option value="name-desc">Tên (Z-A)</option>
+        <option value="region-asc">Miền (A-Z)</option>
+        <option value="region-desc">Miền (Z-A)</option>
       </select>
     </div>
   </header>
@@ -32,8 +32,8 @@
   </main>
 
   <footer class="footer">
-    <p>Total Results: <span id="total-results">0</span></p>
-    <p>Last Updated: <span id="last-updated">2024-12-29</span></p>
+    <p>Tổng số công ty: <span id="total-results">0</span></p>
+    <p>Cập nhật lần cuối: <span id="last-updated">2024-12-29</span></p>
     <p>&copy; 2024 Mihchis. All Rights Reserved.</p>
   </footer>
 
